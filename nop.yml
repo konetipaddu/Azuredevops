@@ -1,0 +1,31 @@
+---
+pool:
+  name: 'Azure Pipelines'
+  VmImage: 'ubuntu-20.04'
+trigger:
+  - develop
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'restore'
+    inputs:
+      command: restore
+      projects: src/NopCommerce.sln
+  - task: DotNetCoreCLI@2
+    displayName: 'build'
+    inputs: 
+      command: build
+      projects: src/NopCommerce.sln
+  - task: DotNetCoreCLI@2
+    displayName: 'test'
+    inputs:
+      command: test
+      projects:
+       ./src/Tests/Nop.Core.Tests/Nop.Core.Tests.csproj
+       ./src/Tests/Nop.Web.MVC.Tests/Nop.Web.MVC.Tests.csproj
+       ./src/Tests/Nop.Services.Tests/Nop.Services.Tests.csproj
+  - task: DotNetCoreCLI@2
+    displayName: 'publish'            
+    inputs:
+      command: publish
+      projects: --configuration $(buildConfiguration)
+      arguments: --configuration $(buildConfiguration)

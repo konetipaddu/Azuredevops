@@ -1,0 +1,13 @@
+parameters:
+- name: javaVersion 
+  type: mystring 
+  default: '1.11'
+- name: mavenGoal
+  type: mystring
+  default: package
+- name: artifactPath
+  type: mystring
+  default: '**/*.jar'
+- name: artifactName
+  type: string
+  default: generic
